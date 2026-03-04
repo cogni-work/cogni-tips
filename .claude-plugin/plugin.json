@@ -1,0 +1,18 @@
+{
+  "name": "cogni-tips",
+  "version": "0.1.0",
+  "description": "TIPS trend scouting and reporting pipeline. Scout industry trends across 4 TIPS dimensions (Trends, Implications, Possibilities, Solutions), select candidates interactively, and generate narrative reports with web-sourced evidence and bilingual support (EN/DE).",
+  "author": {
+    "name": "Stephan de Haas",
+    "email": "stephan@cogni-work.ai"
+  },
+  "license": "CC-BY-NC-SA-4.0",
+  "keywords": [
+    "tips",
+    "trend-scout",
+    "trends",
+    "strategic-trends",
+    "bilingual",
+    "trend-report"
+  ]
+}
