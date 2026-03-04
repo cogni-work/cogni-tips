@@ -1,10 +1,34 @@
 # cogni-tips
 
-A Claude Code plugin for scouting, selecting, and reporting on strategic trends using the TIPS framework (Trends, Implications, Possibilities, Solutions).
+A Claude Code plugin for scouting, selecting, and reporting on strategic industry trends. Combines the [Smarter Service Trendradar](https://www.smarter-service.com/2023/01/31/trendradar-fuer-die-multikrise-und-neue-geooekonomie/) (4-dimension structure by Bernhard Steimel) with the TIPS content framework (Trends, Implications, Possibilities, Solutions — originally from [Siemens Industry Software](https://patents.google.com/patent/WO2018046399A1/en), patent ceased 2019).
+
+## Frameworks
+
+This plugin builds on two complementary frameworks:
+
+**Smarter Service Trendradar** — A concentric 4-layer model for organizing where trends are discovered, developed by [Bernhard Steimel](https://www.smarter-service.com/) for digital transformation research in the German Mittelstand:
+
+| Layer | Dimension | Core Question |
+|-------|-----------|---------------|
+| Outer | Externe Effekte | What external forces are impacting the organization? |
+| Strategic | Neue Horizonte | What will the company be paid for in the future? |
+| Value | Digitale Wertetreiber | Where do we create value through digital means? |
+| Foundation | Digitales Fundament | What capabilities must exist for the next decade? |
+
+Each trend is placed on an action horizon: **Act** (0-2y), **Plan** (2-5y), or **Observe** (5+y).
+
+**TIPS** — A content expansion applied to every discovered trend, regardless of dimension. Originally documented in Siemens patent [WO2018046399A1](https://patents.google.com/patent/WO2018046399A1/en) (filed 2017, ceased 2019 through non-entry into national phase — freely usable). Each trend is analyzed through:
+
+- **T**rend — What is happening?
+- **I**mplications — What does this mean for the industry?
+- **P**ossibilities — How can the organization capitalize?
+- **S**olutions — What concrete steps deliver value?
+
+The dimensions define *where* trends live. TIPS defines *how* each trend is analyzed.
 
 ## Why this exists
 
-Strategic trend analysis is hard to do well. It requires scanning hundreds of sources across languages and regions, scoring candidates against multiple frameworks, and synthesizing everything into a coherent report with verifiable evidence. Most trend reports are either shallow (top-10 lists without evidence) or expensive (months of consultant time). The gap between "we should watch trends" and "here's an actionable, evidence-backed trend report" is where most organizations stall.
+Strategic trend analysis requires scanning hundreds of sources across languages, scoring candidates against multiple frameworks, and synthesizing everything into a report with verifiable evidence. Most trend reports are either shallow (top-10 lists without evidence) or expensive (months of consultant time).
 
 | Problem | What happens | Impact |
 |---------|-------------|--------|
@@ -15,13 +39,11 @@ Strategic trend analysis is hard to do well. It requires scanning hundreds of so
 
 This plugin automates the research-heavy parts while keeping strategic judgment where it belongs — with you.
 
-## What it is
-
-A three-stage TIPS trend pipeline for Claude Code. Scout trends across an industry, select the most relevant candidates, and generate a narrative report with web-sourced quantitative evidence and inline citations. Full bilingual support (EN/DE) for DACH market coverage.
-
 ## What it does
 
-1. **Scout** trends across 4 TIPS dimensions with bilingual web research (32 searches + academic, patent, and regulatory API queries)
+A three-stage pipeline: scout trends across an industry using the Trendradar dimensions, select the most relevant candidates, and generate a TIPS-structured narrative report with web-sourced quantitative evidence and inline citations. Full bilingual support (EN/DE) for DACH market coverage.
+
+1. **Scout** trends across 4 Trendradar dimensions with bilingual web research (32 searches + academic, patent, and regulatory API queries)
 2. **Select** from scored candidates using multi-framework analysis (Ansoff signal intensity, Rogers diffusion stages, CRAAP source quality)
 3. **Report** with 4 parallel agents enriching each dimension with quantitative evidence, producing a narrative report with inline citations and a verifiable claims registry
 
@@ -51,13 +73,13 @@ Describe what you want in natural language:
 
 - "scout trends for the automotive industry"
 - "select trend candidates for manufacturing"
-- "generate a TIPS trend report"
+- "generate a trend report"
 
 Or invoke skills directly:
 
 ```
 trend-scout    → interactive industry selection + trend scouting
-tips-selection → TIPS candidate generation for smarter-service research
+tips-selection → candidate generation across Trendradar dimensions
 trend-report   → narrative report from agreed candidates
 ```
 
@@ -65,18 +87,24 @@ trend-report   → narrative report from agreed candidates
 
 **trend-scout** initializes a research project, dispatches a **trend-web-researcher** agent for bilingual web research (32 queries + API sources), then a **trend-generator** agent to produce scored candidates using extended thinking. You review and select candidates through an interactive workflow or visual selector app.
 
-**trend-report** reads agreed candidates and dispatches 4 parallel **trend-report-writer** agents (one per TIPS dimension). Each agent enriches trends with web-sourced quantitative evidence, writes a narrative section, and extracts verifiable claims. The skill assembles the final report with executive summary, portfolio analysis, and claims registry.
+**trend-report** reads agreed candidates and dispatches 4 parallel **trend-report-writer** agents (one per Trendradar dimension). Each agent enriches trends with web-sourced quantitative evidence, writes a TIPS-structured narrative section, and extracts verifiable claims. The skill assembles the final report with executive summary, portfolio analysis, and claims registry.
 
 ## Components
 
 | Component | Type | What it does |
 |-----------|------|--------------|
-| `tips-selection` | skill | TIPS candidate generation (60 candidates, auto-selected) for smarter-service research |
 | `trend-scout` | skill | End-to-end trend scouting with industry selection and bilingual research |
+| `tips-selection` | skill | Candidate generation (52 trends across 4 dimensions and 3 horizons) |
 | `trend-report` | skill | Narrative report generation with evidence enrichment and claims extraction |
 | `trend-web-researcher` | agent | Executes 32 bilingual web searches + API queries, returns aggregated signals |
 | `trend-generator` | agent | Generates scored trend candidates using multi-framework analysis (Opus) |
-| `trend-report-writer` | agent | Writes one TIPS dimension section with inline citations and claims |
+| `trend-report-writer` | agent | Writes one Trendradar dimension section with TIPS analysis and claims |
+
+## Attribution
+
+- **Smarter Service Trendradar** by [Bernhard Steimel / Smarter Service](https://www.smarter-service.com/) — 4-dimension trend analysis structure. Source: *Trendbook Kompass fur die Multikrise* (2023).
+- **TIPS framework** originated at [Siemens Industry Software](https://patents.google.com/patent/WO2018046399A1/en) — Trends, Implications, Possibilities, Solutions content structure. Patent WO2018046399A1 (filed 2017, ceased 2019).
+- **Scoring frameworks** — Ansoff Matrix (signal intensity), Rogers Diffusion of Innovations (adoption stage), CRAAP Test (source quality).
 
 ## License
 
