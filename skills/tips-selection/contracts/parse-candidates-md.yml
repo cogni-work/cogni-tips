@@ -1,83 +1,43 @@
-# Contract: parse-candidates-md.sh
-# Parses trend-candidates.md and extracts all candidates to JSON
-
-contract_version: "2.0"
-script_name: parse-candidates-md
-script_path: scripts/parse-candidates-md.sh
-
-description: |
-  Parses trend-candidates.md and extracts all 60 candidates to JSON format.
-  No selection filtering — all candidate rows are extracted.
-
-parameters:
-  required:
-    - name: file
-      type: string
-      description: Path to trend-candidates.md file
-      example: "/path/to/project/02-refined-questions/data/trend-candidates.md"
-  optional:
-    - name: json
-      type: flag
-      description: Output results as JSON
-      default: false
-
-exit_codes:
-  0: Success - candidates parsed
-  1: Error - file not found or parse failure
-
-output:
-  json_mode:
-    success_schema:
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-          properties:
-            metadata:
-              type: object
-              properties:
-                industry_sector:
-                  type: string
-                parsed_at:
-                  type: string
-                  format: date-time
-            candidates:
-              type: array
-              items:
-                type: object
-                properties:
-                  dimension:
-                    type: string
-                  horizon:
-                    type: string
-                  sequence:
-                    type: integer
-                  trend_name:
-                    type: string
-                  keywords:
-                    type: string
-                  rationale:
-                    type: string
-                  source:
-                    type: string
-    error_schema:
-      type: object
-      properties:
-        success:
-          type: boolean
-          const: false
-        error:
-          type: string
-
-examples:
-  - description: Parse all candidates with JSON output
-    command: bash scripts/parse-candidates-md.sh --file trend-candidates.md --json
-    expected_exit: 0
-
+version: "2.0.0"
+script:
+  name: "parse-candidates-md.sh"
+  path: "skills/tips-selection/scripts/parse-candidates-md.sh"
+  purpose: "Parses trend-candidates.md and extracts all 60 candidates to JSON format"
+  category: "utilities"
+interface:
+  parameters:
+    required:
+      - name: file
+        type: string
+        description: Path to trend-candidates.md file
+        example: "/path/to/project/02-refined-questions/data/trend-candidates.md"
+    optional:
+      - name: json
+        type: flag
+        description: Output results as JSON
+        default: false
+  output:
+    format: "json"
+    schema:
+      success: "boolean"
+      data:
+        metadata:
+          industry_sector: "string"
+          parsed_at: "string (ISO 8601)"
+        candidates: "array of candidate objects"
+      error: "string (if success=false)"
+  exit_codes:
+    0: "Success - candidates parsed"
+    1: "Error - file not found or parse failure"
+compatibility:
+  min_bash_version: "3.2"
+  dependencies: []
 changelog:
-  - version: "2.0"
+  - version: "2.0.0"
     date: "2026-03-04"
     changes: "Updated for auto-select-60 flow. Parses all rows (was filtering for [x] selections)."
     breaking: true
+  - version: "1.0.0"
+    date: "2026-01-02"
+    changes: "Initial contract generation"
+    breaking: false

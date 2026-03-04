@@ -57,7 +57,7 @@ Or invoke skills directly:
 
 ```
 trend-scout    → interactive industry selection + trend scouting
-tips-selection → candidate selection from existing research
+tips-selection → TIPS candidate generation for smarter-service research
 trend-report   → narrative report from agreed candidates
 ```
 
@@ -71,7 +71,7 @@ trend-report   → narrative report from agreed candidates
 
 | Component | Type | What it does |
 |-----------|------|--------------|
-| `tips-selection` | skill | Interactive TIPS candidate selection for smarter-service research |
+| `tips-selection` | skill | TIPS candidate generation (60 candidates, auto-selected) for smarter-service research |
 | `trend-scout` | skill | End-to-end trend scouting with industry selection and bilingual research |
 | `trend-report` | skill | Narrative report generation with evidence enrichment and claims extraction |
 | `trend-web-researcher` | agent | Executes 32 bilingual web searches + API queries, returns aggregated signals |
