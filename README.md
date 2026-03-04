@@ -42,7 +42,6 @@ claude plugins add cogni-work/cogni-tips
 
 **Prerequisites:**
 - Web access enabled (for trend research)
-- `cogni-research` plugin (for downstream deeper-research-0 integration)
 - Optional: `cogni-narrative` plugin (for insight summary generation)
 - Optional: `cogni-workplace` plugin (for automated claim verification)
 
