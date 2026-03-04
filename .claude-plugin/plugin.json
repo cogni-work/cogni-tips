@@ -16,13 +16,13 @@
     "trend-report"
   ],
   "skills": [
-    "./skills/tips-selection",
-    "./skills/trend-report",
-    "./skills/trend-scout"
+    "../skills/tips-selection",
+    "../skills/trend-report",
+    "../skills/trend-scout"
   ],
   "agents": [
-    "./agents/trend-generator.md",
-    "./agents/trend-report-writer.md",
-    "./agents/trend-web-researcher.md"
+    "../agents/trend-generator.md",
+    "../agents/trend-report-writer.md",
+    "../agents/trend-web-researcher.md"
   ]
 }
