@@ -2,19 +2,18 @@
 set -euo pipefail
 #
 # validate-selection.sh
-# Version: 1.0.0
-# Purpose: Validates TIPS candidate selection counts from tips-candidates.md
+# Version: 2.0.0
+# Purpose: Validates TIPS candidate counts from trend-candidates.md
 #
 # Usage:
-#   bash validate-selection.sh --file <tips-candidates.md> [--json]
+#   bash validate-selection.sh --file <trend-candidates.md> [--json]
 #
-# Returns:
-#   JSON object with validation results
+# Validates that the file contains exactly 60 candidates:
+#   5 per cell (4 dimensions x 3 horizons)
 #
 # Exit codes:
-#   0 - Valid selection (52 candidates: 5 ACT + 5 PLAN + 3 OBSERVE per dimension)
-#   1 - Invalid selection or error
-#
+#   0 - Valid (60 candidates, 5 per cell)
+#   1 - Invalid or error
 
 
 # Defaults
@@ -50,12 +49,10 @@ if [[ ! -f "$FILE_PATH" ]]; then
   exit 1
 fi
 
-# Initialize counters
-# Bash 3.2 compatible - indexed arrays (declare -A requires Bash 4.0+)
+# Initialize counters (Bash 3.2 compatible - indexed arrays)
 CELL_KEYS=()
 CELL_VALUES=()
 
-# Helper function to get count for a cell key
 get_cell_count() {
   local key="$1"
   local i=0
@@ -69,7 +66,6 @@ get_cell_count() {
   echo "0"
 }
 
-# Helper function to increment count for a cell key
 increment_cell_count() {
   local key="$1"
   local i=0
@@ -80,20 +76,18 @@ increment_cell_count() {
     fi
     i=$((i + 1))
   done
-  # Key not found, add new entry
   CELL_KEYS+=("$key")
   CELL_VALUES+=("1")
 }
 
-TOTAL_SELECTED=0
+TOTAL_COUNT=0
 DIMENSIONS=("externe-effekte" "neue-horizonte" "digitale-wertetreiber" "digitales-fundament")
 HORIZONS=("act" "plan" "observe")
 
-# Current parsing context
 CURRENT_DIM=""
 CURRENT_HORIZON=""
 
-# Read file and count selections
+# Count candidate rows per cell
 while IFS= read -r line; do
   # Detect dimension headers
   if [[ "$line" =~ "## Dimension: Externe Effekte" ]]; then
@@ -115,54 +109,49 @@ while IFS= read -r line; do
     CURRENT_HORIZON="observe"
   fi
 
-  # Count selections (lines with [x])
+  # Count candidate rows (table rows starting with | followed by a number)
   if [[ -n "$CURRENT_DIM" && -n "$CURRENT_HORIZON" ]]; then
-    if [[ "$line" =~ ^\|[[:space:]]*\[x\] ]] || [[ "$line" =~ ^\|[[:space:]]*\[X\] ]]; then
+    if [[ "$line" =~ ^\|[[:space:]]*[0-9] ]]; then
       cell_key="${CURRENT_DIM}:${CURRENT_HORIZON}"
       increment_cell_count "$cell_key"
-      TOTAL_SELECTED=$((TOTAL_SELECTED + 1))
+      TOTAL_COUNT=$((TOTAL_COUNT + 1))
     fi
   fi
 done < "$FILE_PATH"
 
-# Validate counts with horizon-specific expected values
-# ACT: 5, PLAN: 5, OBSERVE: 3 per dimension
+# Validate: 5 candidates per cell, 60 total
 INVALID_CELLS=()
 VALID=true
+EXPECTED_PER_CELL=5
 
 for dim in "${DIMENSIONS[@]}"; do
   for horizon in "${HORIZONS[@]}"; do
     cell_key="${dim}:${horizon}"
     count=$(get_cell_count "$cell_key")
-    # Horizon-specific expected counts
-    case "$horizon" in
-      act|plan) expected=5 ;;
-      observe) expected=3 ;;
-    esac
-    if [[ "$count" -ne "$expected" ]]; then
-      INVALID_CELLS+=("{\"dimension\": \"$dim\", \"horizon\": \"$horizon\", \"selected\": $count, \"required\": $expected}")
+    if [[ "$count" -ne "$EXPECTED_PER_CELL" ]]; then
+      INVALID_CELLS+=("{\"dimension\": \"$dim\", \"horizon\": \"$horizon\", \"found\": $count, \"expected\": $EXPECTED_PER_CELL}")
       VALID=false
     fi
   done
 done
 
-# Build JSON output
+# Output
 if [[ "$JSON_OUTPUT" == true ]]; then
   if [[ "$VALID" == true ]]; then
-    echo "{\"success\": true, \"data\": {\"total_selected\": $TOTAL_SELECTED, \"valid\": true, \"invalid_cells\": []}}"
+    echo "{\"success\": true, \"data\": {\"total_candidates\": $TOTAL_COUNT, \"valid\": true, \"invalid_cells\": []}}"
     exit 0
   else
     invalid_json="$(printf '%s,' "${INVALID_CELLS[@]}" | sed 's/,$//')"
-    echo "{\"success\": true, \"data\": {\"total_selected\": $TOTAL_SELECTED, \"valid\": false, \"invalid_cells\": [$invalid_json]}}"
+    echo "{\"success\": true, \"data\": {\"total_candidates\": $TOTAL_COUNT, \"valid\": false, \"invalid_cells\": [$invalid_json]}}"
     exit 1
   fi
 else
   if [[ "$VALID" == true ]]; then
-    echo "Selection valid: $TOTAL_SELECTED candidates (5 ACT + 5 PLAN + 3 OBSERVE per dimension)"
+    echo "Valid: $TOTAL_COUNT candidates (5 per cell x 12 cells)"
     exit 0
   else
-    echo "Selection invalid: $TOTAL_SELECTED candidates selected"
-    echo "Invalid cells:"
+    echo "Invalid: $TOTAL_COUNT candidates found (expected 60)"
+    echo "Cells with wrong counts:"
     for cell_info in "${INVALID_CELLS[@]}"; do
       echo "  $cell_info"
     done

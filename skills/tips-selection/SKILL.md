@@ -1,171 +1,112 @@
 ---
 name: tips-selection
 description: |
-  Interactive TIPS (Trend-Implications-Possibilities-Solutions) candidate selection workflow for smarter-service research projects. Generates trend candidates across 4 dimensions and 3 horizons, presents them for user review and down-selection, supports user-proposed candidates and regeneration requests, and iterates until agreed candidates are finalized. Mandatory prerequisite for dimension-planner when research_type is smarter-service. Use when: (1) Starting smarter-service research that requires TIPS candidate selection, (2) User wants to review and select trend candidates before generating refined questions, (3) User mentions "TIPS selection", "trend candidates", or wants to customize research candidates, (4) dimension-planner halts due to missing agreed-trend-candidates.json.
+  Interactive TIPS (Trend-Implications-Possibilities-Solutions) candidate generation workflow for smarter-service research projects. Generates 60 trend candidates across 4 dimensions and 3 horizons using web research and training knowledge, presents them for user review, and auto-selects all 60 for downstream dimension-planner integration. This skill is a mandatory prerequisite for dimension-planner when research_type is smarter-service. Use when: (1) starting smarter-service research that needs TIPS candidates, (2) user mentions "TIPS selection", "trend candidates", or wants to generate research candidates, (3) dimension-planner halts due to missing agreed-trend-candidates.json, (4) user wants to customize or regenerate trend candidates before research planning.
 ---
 
 # TIPS Selection
 
-Interactive workflow for selecting TIPS (Trend-Implications-Possibilities-Solutions) candidates for smarter-service research projects.
+Generate and finalize 60 TIPS trend candidates for smarter-service research projects.
 
-## Purpose
+## Why This Skill Exists
 
-This skill is a **mandatory prerequisite** for `dimension-planner` when `research_type: smarter-service`. It enables users to:
-
-1. Generate 60 trend candidates (5 per cell)
-2. Auto-select all 60 candidates for smarter-service (5 per cell)
-3. Produce agreed candidates for dimension-planner
+The dimension-planner skill needs a curated set of trend candidates to generate refined research questions. This skill produces those candidates by combining live web research with training knowledge, organized across 4 dimensions and 3 horizons. All 60 candidates are auto-selected — the user reviews them but doesn't need to down-select.
 
 ## Prerequisites
 
-- Research project initialized with `research_type: smarter-service` in question frontmatter
-- `industry_sector` field in question frontmatter OR extractable from `research_context`
+- Research project with `research_type: smarter-service` in question frontmatter
+- `industry_sector` field in question frontmatter (or extractable from `research_context`)
 
-## References Index
+## References
 
-Read references **only when needed** for the specific task:
+Read references only when entering the corresponding phase:
 
-| Reference | Read when... |
-|-----------|--------------|
-| [references/workflow-phases/phase-0-initialize.md](references/workflow-phases/phase-0-initialize.md) | Starting skill - load context |
-| [references/workflow-phases/phase-0.5-web-research.md](references/workflow-phases/phase-0.5-web-research.md) | Executing live web search for trend signals |
-| [references/workflow-phases/phase-1-generate.md](references/workflow-phases/phase-1-generate.md) | Generating 60 candidates |
-| [references/workflow-phases/phase-2-present.md](references/workflow-phases/phase-2-present.md) | Writing trend-candidates.md |
-| [references/workflow-phases/phase-3-process.md](references/workflow-phases/phase-3-process.md) | Processing user selections |
-| [references/workflow-phases/phase-4-finalize.md](references/workflow-phases/phase-4-finalize.md) | Finalizing agreed candidates |
-| [../../references/research-types/smarter-service.md](../../references/research-types/smarter-service.md) | Understanding TIPS framework |
+| Reference | When to read |
+|-----------|-------------|
+| [phase-0-initialize.md](references/workflow-phases/phase-0-initialize.md) | Starting the skill — load project context |
+| [phase-0.5-web-research.md](references/workflow-phases/phase-0.5-web-research.md) | Running web searches for trend signals |
+| [phase-1-generate.md](references/workflow-phases/phase-1-generate.md) | Generating 60 candidates |
+| [phase-2-present.md](references/workflow-phases/phase-2-present.md) | Writing trend-candidates.md |
+| [phase-3-finalize.md](references/workflow-phases/phase-3-finalize.md) | Building agreed-trend-candidates.json |
 
-## Immediate Action: Initialize TodoWrite
+## Workflow
 
-**MANDATORY:** Initialize TodoWrite immediately with workflow phases:
-
-1. Phase 0: Initialize & Load Context [in_progress]
-2. Phase 0.5: Web Research (if enabled) [pending]
-3. Phase 1: Generate Candidate Pool [pending]
-4. Phase 2: Present Candidates [pending]
-5. Phase 3: Process User Selection [pending]
-6. Phase 4: Finalize Agreed Candidates [pending]
-
-Update todo status as you progress through each phase.
-
----
-
-## Core Workflow
-
-```text
-Phase 0 → Phase 0.5 → Phase 1 → Phase 2 → [USER EDITS] → Phase 3 → Phase 4
-   │          │          │         │            │            │         │
-   │          │          │         │            │            │         └─ Write JSON
-   │          │          │         │            │            └─ Validate selections
-   │          │          │         │            └─ User marks [x], adds proposals
-   │          │          │         └─ Write trend-candidates.md, PAUSE
-   │          │          └─ Generate 60 candidates (mix web + training)
-   │          └─ Web search for trend signals (8 searches: 4 dims × 2 regions)
-   └─ Load question, extract industry_sector, set WEB_RESEARCH_ENABLED
+```
+Phase 0 → Phase 0.5 → Phase 1 → Phase 2 → Phase 3
+  │           │          │          │          │
+  │           │          │          │          └─ Write agreed JSON, done
+  │           │          │          └─ Write trend-candidates.md for user review
+  │           │          └─ Generate 60 candidates (web + training mix)
+  │           └─ Web search for trend signals (8 searches)
+  └─ Load project context, validate prerequisites
 ```
 
-**Web Research:** Enabled by default. Disable with `web_research: false` in question frontmatter.
+Track progress using TodoWrite:
 
-### Phase 0: Initialize & Load Context
+1. Phase 0: Initialize & Load Context
+2. Phase 0.5: Web Research (if enabled)
+3. Phase 1: Generate 60 Candidates
+4. Phase 2: Present Candidates
+5. Phase 3: Finalize Agreed Candidates
 
-Read [references/workflow-phases/phase-0-initialize.md](references/workflow-phases/phase-0-initialize.md), then execute:
+### Phase 0: Initialize
 
-1. Extract PROJECT_PATH from question file path
-2. Read question frontmatter for `industry_sector` or extract from `research_context`
-3. Validate project has `research_type: smarter-service`
-4. Create `02-refined-questions/data/` directory if needed
-5. Configure WEB_RESEARCH_ENABLED (default: true)
-6. Initialize logging
+Read [phase-0-initialize.md](references/workflow-phases/phase-0-initialize.md).
 
-**Required outputs:**
+Extract PROJECT_PATH, INDUSTRY_SECTOR, and WEB_RESEARCH_ENABLED from the question file. Validate the project is smarter-service type. If trend-candidates.md already exists with status `agreed`, nothing to do.
 
-- PROJECT_PATH, INDUSTRY_SECTOR variables set
-- WEB_RESEARCH_ENABLED configured
-- Project validated as smarter-service type
+### Phase 0.5: Web Research
 
-### Phase 0.5: Web Research (If Enabled)
+Read [phase-0.5-web-research.md](references/workflow-phases/phase-0.5-web-research.md).
 
-Read [references/workflow-phases/phase-0.5-web-research.md](references/workflow-phases/phase-0.5-web-research.md), then execute:
+Run 8 web searches (4 dimensions x 2 regions: global + DACH) to gather current trend signals. These signals enrich candidate generation in Phase 1. If all searches fail, proceed with training knowledge only.
 
-1. Build 8 search configurations (4 dimensions × 2 regions: global + DACH)
-2. Execute WebSearch for each config
-3. Extract trend signals from results
-4. Aggregate and deduplicate signals by dimension
-5. Build WEB_RESEARCH_CONTEXT for Phase 1
+Web research is enabled by default. Disable via `web_research: false` in question frontmatter.
 
-**Required outputs:**
+### Phase 1: Generate Candidates
 
-- WEB_RESEARCH_AVAILABLE flag set
-- WEB_RESEARCH_CONTEXT with signals by dimension
+Read [phase-1-generate.md](references/workflow-phases/phase-1-generate.md).
 
-**Fallback:** If all searches fail, proceed with training-only generation (warning logged).
-
-### Phase 1: Generate Candidate Pool
-
-Read [references/workflow-phases/phase-1-generate.md](references/workflow-phases/phase-1-generate.md), then execute:
-
-1. Load WEB_RESEARCH_CONTEXT if available
-2. Generate 60 trend candidates using extended thinking
-3. Mix web-signal sourced (40-60%) and training sourced (40-60%) candidates
-4. 5 candidates per cell (4 dimensions × 3 horizons × 5 = 60)
-5. Each candidate includes: trend name, keywords (3), rationale, source, freshness
-6. All candidates contextualized to INDUSTRY_SECTOR
-
-**Required outputs:**
-
-- 60 candidates stored in memory with source tracking
-- Distribution: 5 per cell (12 cells total)
-- Source breakdown: web-signal count, training count
+Generate 60 trend candidates: 5 per cell across a 4x3 matrix (4 dimensions x 3 horizons). Mix web-sourced and training-sourced candidates. Each candidate includes trend name, 3 keywords, rationale, source type, and freshness indicator.
 
 ### Phase 2: Present Candidates
 
-Read [references/workflow-phases/phase-2-present.md](references/workflow-phases/phase-2-present.md), then execute:
+Read [phase-2-present.md](references/workflow-phases/phase-2-present.md).
 
-1. Write `trend-candidates.md` to `{PROJECT_PATH}/02-refined-questions/data/`
-2. Include selection tables with checkboxes
-3. Include "User Proposed" section
-4. Include "More?" column for regeneration requests
-5. Include selection summary table
+Write `trend-candidates.md` to `{PROJECT_PATH}/02-refined-questions/data/`. This file is a human-readable record of all 60 candidates organized by dimension and horizon. Inform the user the file is ready for review.
 
-**PAUSE:** After writing the file, instruct user to:
+### Phase 3: Finalize
 
-**smarter-service auto-selection:** All 60 candidates are automatically selected (5 per cell). No user down-selection required.
+Read [phase-3-finalize.md](references/workflow-phases/phase-3-finalize.md).
 
-### Phase 4: Finalize Agreed Candidates
-
-Read [references/workflow-phases/phase-4-finalize.md](references/workflow-phases/phase-4-finalize.md), then execute:
-
-1. Build JSON structure with 60 agreed candidates (auto-selected)
-2. Write `agreed-trend-candidates.json` to `.metadata/`
-3. Update `trend-candidates.md` frontmatter status to `agreed`
-4. Log completion
-
-**Required outputs:**
-
-- `.metadata/agreed-trend-candidates.json` with 60 candidates
-- `trend-candidates.md` status updated to `agreed`
+Auto-select all 60 candidates and write `agreed-trend-candidates.json` to `.metadata/`. Update trend-candidates.md status to `agreed`. The dimension-planner skill will pick up this JSON file automatically.
 
 ---
 
-## Output Schema
+## Dimension Matrix
+
+| Dimension | German | TIPS Focus | Description |
+|-----------|--------|------------|-------------|
+| externe-effekte | Externe Effekte | Trend (T) | External forces, regulations, market shifts |
+| neue-horizonte | Neue Horizonte | Possibilities (P) | Strategic options, business model evolution |
+| digitale-wertetreiber | Digitale Wertetreiber | Implications (I) | Value creation, digital impact |
+| digitales-fundament | Digitales Fundament | Solutions (S) | Capabilities, infrastructure, enablers |
+
+### Horizons
+
+| Horizon | Timeframe | Character |
+|---------|-----------|-----------|
+| act | 0-2 years | Immediate, validated, ready for implementation |
+| plan | 2-5 years | Emerging, requires preparation |
+| observe | 5+ years | Future, speculative, monitoring stage |
+
+## Output Files
 
 ### trend-candidates.md
 
 Location: `{PROJECT_PATH}/02-refined-questions/data/trend-candidates.md`
 
-```yaml
----
-status: draft | pending_review | agreed
-industry_sector: "manufacturing"
-generated_at: 2025-12-16T10:30:00Z
-total_candidates: 60
-selected_count: 0
-web_research_status: "success"
-web_sourced_candidates: 28
-training_sourced_candidates: 32
-search_timestamp: 2025-12-16T10:25:00Z
----
-```
+Human-readable record with all 60 candidates in tables, organized by dimension and horizon. Includes source provenance and freshness indicators.
 
 ### agreed-trend-candidates.json
 
@@ -175,13 +116,12 @@ Location: `{PROJECT_PATH}/.metadata/agreed-trend-candidates.json`
 {
   "metadata": {
     "industry_sector": "manufacturing",
-    "agreed_at": "2025-12-16T11:45:00Z",
+    "agreed_at": "2026-03-04T10:30:00Z",
     "total_candidates": 60,
     "source_skill": "tips-selection",
     "web_research_status": "success",
-    "web_sourced_count": 18,
-    "training_sourced_count": 18,
-    "search_timestamp": "2025-12-16T10:25:00Z"
+    "web_sourced_count": 28,
+    "training_sourced_count": 32
   },
   "candidates": [
     {
@@ -189,81 +129,26 @@ Location: `{PROJECT_PATH}/.metadata/agreed-trend-candidates.json`
       "horizon": "act",
       "sequence": 1,
       "trend_name": "EU AI Act Compliance",
-      "keywords": ["ai-act", "regulation", "2024"],
+      "keywords": ["ai-act", "regulation", "2026"],
       "rationale": "Immediate deadline pressure",
       "source": "web-signal",
-      "source_url": "https://ec.europa.eu/...",
-      "freshness_date": "2024-12"
+      "source_url": "https://...",
+      "freshness_date": "2026-01"
     }
   ]
 }
 ```
 
----
+## Integration
 
-## Selection Constraints
-
-| Constraint | Value |
-|------------|-------|
-| Total candidates generated | 60 (5 per cell) |
-| Candidates per cell | 5 |
-| Selection mode | Auto-select all 60 (smarter-service) |
-| Total agreed candidates | 60 (4 dims × 3 horizons × 5) |
-
----
-
-## Dimension Matrix
-
-| Dimension | German | Primary TIPS | Horizon Distribution |
-|-----------|--------|--------------|---------------------|
-| externe-effekte | Externe Effekte | Trend (T) | 5 Act, 5 Plan, 5 Observe |
-| neue-horizonte | Neue Horizonte | Possibilities (P) | 5 Act, 5 Plan, 5 Observe |
-| digitale-wertetreiber | Digitale Wertetreiber | Implications (I) | 5 Act, 5 Plan, 5 Observe |
-| digitales-fundament | Digitales Fundament | Solutions (S) | 5 Act, 5 Plan, 5 Observe |
-
----
+After this skill completes, the user runs `dimension-planner`. That skill checks for `.metadata/agreed-trend-candidates.json` — if present and valid (60 candidates), it uses them; if missing, it halts with an instruction to run `tips-selection` first.
 
 ## Error Handling
 
 | Scenario | Response |
 |----------|----------|
-| Missing question file | Exit 1, cannot proceed |
-| research_type not smarter-service | Exit 1, skill only for smarter-service |
-| industry_sector not found | Prompt user to provide |
-| trend-candidates.md not found (Phase 3) | Run Phase 1-2 first |
-| Selection count invalid | Report errors, PAUSE for user correction |
-| User proposal off-sector | Warn but allow override |
-
----
-
-## Integration with dimension-planner
-
-After `tips-selection` completes:
-
-1. User invokes `dimension-planner` skill
-2. dimension-planner Phase 2 checks for `.metadata/agreed-trend-candidates.json`
-3. If present and valid (60 candidates): Use agreed candidates
-4. If missing: HALT with instruction to run `tips-selection` first
-
----
-
-## Debugging
-
-### Logging
-
-```bash
-# Log file location
-${PROJECT_PATH}/.logs/tips-selection-execution-log.txt
-
-# View phase transitions
-grep "\[PHASE\]" "${PROJECT_PATH}/.logs/tips-selection-execution-log.txt"
-
-# View validation results
-grep "\[VALIDATION\]" "${PROJECT_PATH}/.logs/tips-selection-execution-log.txt"
-```
-
-### Common Issues
-
-1. **"Selection count invalid"** - User marked wrong number of candidates per cell
-2. **"Industry sector not found"** - Add `industry_sector:` to question frontmatter
-3. **"File not found"** - Ensure trend-candidates.md exists before Phase 3
+| Missing question file | Exit — cannot proceed without project context |
+| research_type not smarter-service | Exit — this skill only handles smarter-service |
+| industry_sector not found | Ask the user to provide it |
+| All web searches fail | Proceed with training-only generation (warning logged) |
+| trend-candidates.md already agreed | Nothing to do — inform user |

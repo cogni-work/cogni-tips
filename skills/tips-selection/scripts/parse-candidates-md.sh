@@ -2,16 +2,15 @@
 set -euo pipefail
 #
 # parse-candidates-md.sh
-# Parses tips-candidates.md and extracts selected candidates to JSON
+# Version: 2.0.0
+# Purpose: Parses trend-candidates.md and extracts all candidates to JSON
 #
 # Usage:
-#   bash parse-candidates-md.sh --file <tips-candidates.md> [--json]
+#   bash parse-candidates-md.sh --file <trend-candidates.md> [--json]
 #
-# Returns:
-#   JSON object with selected candidates
-#   Exit 0: Success
-#   Exit 1: Error
-#
+# Exit codes:
+#   0 - Success
+#   1 - Error
 
 
 # Defaults
@@ -36,7 +35,6 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Validate required arguments
 if [[ -z "$FILE_PATH" ]]; then
   echo '{"success": false, "error": "Missing required argument: --file"}' >&2
   exit 1
@@ -51,9 +49,8 @@ fi
 CANDIDATES_JSON="[]"
 CURRENT_DIM=""
 CURRENT_HORIZON=""
-SEQUENCE=0
 
-# Read file and extract selected candidates
+# Read file and extract all candidate rows
 while IFS= read -r line; do
   # Detect dimension headers
   if [[ "$line" =~ "## Dimension: Externe Effekte" ]]; then
@@ -69,33 +66,26 @@ while IFS= read -r line; do
   # Detect horizon headers
   if [[ "$line" =~ "### Horizon: Act" ]]; then
     CURRENT_HORIZON="act"
-    SEQUENCE=0
   elif [[ "$line" =~ "### Horizon: Plan" ]]; then
     CURRENT_HORIZON="plan"
-    SEQUENCE=0
   elif [[ "$line" =~ "### Horizon: Observe" ]]; then
     CURRENT_HORIZON="observe"
-    SEQUENCE=0
   fi
 
-  # Parse selected rows (lines with [x] or [X])
+  # Parse candidate rows (table rows starting with | followed by a number)
   if [[ -n "$CURRENT_DIM" && -n "$CURRENT_HORIZON" ]]; then
-    if [[ "$line" =~ ^\|[[:space:]]*\[x\] ]] || [[ "$line" =~ ^\|[[:space:]]*\[X\] ]]; then
-      SEQUENCE=$((SEQUENCE + 1))
-
-      # Parse table row: | [x] | # | Trend Name | Keywords | Rationale | More? |
-      # Remove leading/trailing pipes and split
+    if [[ "$line" =~ ^\|[[:space:]]*[0-9] ]]; then
+      # Parse: | # | Trend Name | Keywords | Rationale | Source | Fresh |
       row="$(echo "$line" | sed 's/^|//' | sed 's/|$//')"
 
-      # Extract fields (simplified parsing)
-      trend_name="$(echo "$row" | awk -F'|' '{print $3}' | xargs)"
-      keywords="$(echo "$row" | awk -F'|' '{print $4}' | xargs)"
-      rationale="$(echo "$row" | awk -F'|' '{print $5}' | xargs)"
+      sequence="$(echo "$row" | awk -F'|' '{print $1}' | xargs)"
+      trend_name="$(echo "$row" | awk -F'|' '{print $2}' | xargs)"
+      keywords="$(echo "$row" | awk -F'|' '{print $3}' | xargs)"
+      rationale="$(echo "$row" | awk -F'|' '{print $4}' | xargs)"
+      source_type="$(echo "$row" | awk -F'|' '{print $5}' | xargs)"
 
-      # Build candidate JSON
-      candidate="{\"dimension\": \"$CURRENT_DIM\", \"horizon\": \"$CURRENT_HORIZON\", \"sequence\": $SEQUENCE, \"trend_name\": \"$trend_name\", \"keywords\": \"$keywords\", \"rationale\": \"$rationale\", \"source\": \"generated\"}"
+      candidate="{\"dimension\": \"$CURRENT_DIM\", \"horizon\": \"$CURRENT_HORIZON\", \"sequence\": $sequence, \"trend_name\": \"$trend_name\", \"keywords\": \"$keywords\", \"rationale\": \"$rationale\", \"source\": \"$source_type\"}"
 
-      # Append to array (simplified - in production use jq)
       if [[ "$CANDIDATES_JSON" == "[]" ]]; then
         CANDIDATES_JSON="[$candidate]"
       else
@@ -108,7 +98,7 @@ done < "$FILE_PATH"
 # Extract metadata from frontmatter
 INDUSTRY_SECTOR="$(grep -E "^industry_sector:" "$FILE_PATH" | sed 's/industry_sector: *//' | tr -d '"' || echo "unknown")"
 
-# Build final output
+# Output
 if [[ "$JSON_OUTPUT" == true ]]; then
   TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
   echo "{\"success\": true, \"data\": {\"metadata\": {\"industry_sector\": \"$INDUSTRY_SECTOR\", \"parsed_at\": \"$TIMESTAMP\"}, \"candidates\": $CANDIDATES_JSON}}"

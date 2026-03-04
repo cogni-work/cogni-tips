@@ -1,20 +1,20 @@
 # Contract: parse-candidates-md.sh
-# Parses tips-candidates.md and extracts selected candidates to JSON
+# Parses trend-candidates.md and extracts all candidates to JSON
 
-contract_version: "1.0"
+contract_version: "2.0"
 script_name: parse-candidates-md
 script_path: scripts/parse-candidates-md.sh
 
 description: |
-  Parses tips-candidates.md and extracts selected candidates to JSON format.
-  Used to convert user selections into structured data for processing.
+  Parses trend-candidates.md and extracts all 60 candidates to JSON format.
+  No selection filtering — all candidate rows are extracted.
 
 parameters:
   required:
     - name: file
       type: string
-      description: Path to tips-candidates.md file
-      example: "/path/to/project/02-refined-questions/tips-candidates.md"
+      description: Path to trend-candidates.md file
+      example: "/path/to/project/02-refined-questions/data/trend-candidates.md"
   optional:
     - name: json
       type: flag
@@ -72,6 +72,12 @@ output:
           type: string
 
 examples:
-  - description: Parse candidates with JSON output
-    command: bash scripts/parse-candidates-md.sh --file tips-candidates.md --json
+  - description: Parse all candidates with JSON output
+    command: bash scripts/parse-candidates-md.sh --file trend-candidates.md --json
     expected_exit: 0
+
+changelog:
+  - version: "2.0"
+    date: "2026-03-04"
+    changes: "Updated for auto-select-60 flow. Parses all rows (was filtering for [x] selections)."
+    breaking: true
