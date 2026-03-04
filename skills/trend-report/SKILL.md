@@ -105,7 +105,7 @@ OPTIONAL (raw web signals — try in order):
   1. {PROJECT_PATH}/.logs/web-research-raw.json
      → .raw_signals_before_dedup array (full field names)
   2. FALLBACK: {PROJECT_PATH}/phase1-research-summary.json
-     → .items array (abbreviated fields: d→dimension, n→signal, k→keywords, etc.)
+     → .items array (abbreviated fields: d→dimension, n→signal, k→keywords, u→source, f→freshness, a→authority, t→source_type, i→indicator_type, lt→lead_time)
 ```
 
 #### Step 0.3: Validate Entry Gate
@@ -302,7 +302,21 @@ If `cogni-claims` is not installed, display a warning and skip — do not halt.
 
 #### Step 3.3: Process Results
 
-Parse the QualityGateResult, display PASS/REVIEW/FAIL summary, write verification metadata to `.metadata/trend-report-verification.json`. If FAIL: present failed claims as information only — do not auto-correct the report.
+Parse the QualityGateResult, display PASS/REVIEW/FAIL summary, write verification metadata to `.metadata/trend-report-verification.json`:
+
+```json
+{
+  "verified_at": "ISO-8601",
+  "verdict": "PASS|REVIEW|FAIL",
+  "total_claims": N,
+  "verified": N,
+  "passed": N,
+  "failed": N,
+  "review": N
+}
+```
+
+If FAIL: present failed claims as information only — do not auto-correct the report.
 
 ---
 
@@ -352,6 +366,7 @@ Recommended next steps:
 | `tips_candidates.total < 52` | HALT: Expected 52 candidates |
 | No raw signals file (both sources) | WARNING: proceed without signals (~120 searches) |
 | Agent returns `ok: false` | Retry once, then HALT with dimension name |
+| All 4 agents fail | HALT: Check web access is enabled |
 | `cogni-narrative` not installed | WARNING: skip insight summary |
 | `cogni-claims` not installed | WARNING: skip verification |
 | claim-work returns FAIL | Present failed claims. Do not auto-correct. |
@@ -369,6 +384,11 @@ Log files in `{PROJECT_PATH}/.logs/`:
 - `claims-{dimension}.json` — dimension claims (4 files)
 - `report-portfolio.md` — portfolio analysis
 - `report-claims-registry.md` — claims table
+
+Output files in `{PROJECT_PATH}/`:
+- `tips-trend-report.md` — assembled final report
+- `tips-trend-report-claims.json` — merged claims registry
+- `tips-insight-summary.md` — arc-aware insight summary (Phase 2.5, if successful)
 
 | Issue | Check |
 |-------|-------|

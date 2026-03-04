@@ -3,6 +3,7 @@ name: trend-report-writer
 description: Generate a narrative TIPS dimension section with inline citations and extract verifiable claims. Receives ~13 trend candidates for a single dimension, enriches each with web-sourced quantitative evidence via bilingual searches, writes a markdown section file and a claims JSON file. Returns compact JSON summary. Use when trend-report Phase 1 needs context-efficient dimension section delegation.
 tools: WebSearch, Read, Write
 model: sonnet
+color: green
 ---
 
 # Trend Report Writer Agent
@@ -31,7 +32,7 @@ You receive these from trend-report:
 - **SUBSECTOR_EN / SUBSECTOR_DE** — Subsector name in both languages
 - **TOPIC** — Research focus topic
 - **CANDIDATES** — JSON array of ~13 trend candidate objects
-- **RAW_SIGNALS** — JSON array of web signals for this dimension (full field names), or "none"
+- **RAW_SIGNALS** — JSON array of web signals for this dimension (fields: dimension, signal, keywords, source, freshness, authority, source_type, indicator_type, lead_time), or "none"
 - **LABELS** — JSON object with i18n labels for report headings
 
 ## Workflow

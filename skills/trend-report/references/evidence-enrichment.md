@@ -110,7 +110,25 @@ When processing search results OR raw signals, look for:
 | Conflicting numbers from sources | Use the most authoritative source, note conflict in prose |
 | Only German-language evidence found | Use it, cite in original language |
 | Only English-language evidence found | Use it regardless of report language |
-| Raw signals file missing | Orchestrator tries fallback (`phase1-research-summary.json` with field expansion). If both unavailable, agent receives "none" and uses full WebSearch for all trends |
+| Raw signals file missing | Orchestrator tries fallback (`phase1-research-summary.json` with field expansion — see below). If both unavailable, agent receives "none" and uses full WebSearch for all trends |
+
+---
+
+## Abbreviated Field Expansion
+
+The fallback source `phase1-research-summary.json` uses abbreviated field names to save space. The orchestrator expands these before passing to agents:
+
+| Abbreviated | Full Field |
+|-------------|-----------|
+| `d` | `dimension` |
+| `n` | `signal` |
+| `k` | `keywords` |
+| `u` | `source` |
+| `f` | `freshness` |
+| `a` | `authority` |
+| `t` | `source_type` |
+| `i` | `indicator_type` |
+| `lt` | `lead_time` |
 
 ---
 
