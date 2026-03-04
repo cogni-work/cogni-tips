@@ -1,7 +1,7 @@
 ---
 name: trend-report
 description: |
-  Generate a narrative TIPS trend report with inline citations and verifiable claims from trend-scout output. Reads agreed trend candidates, enriches each with web-sourced quantitative evidence via parallel agents, assembles a full report with executive summary and portfolio analysis, generates a trend-panorama insight summary via cogni-narrative, and optionally invokes claim-work for automated verification. Use when: (1) trend-scout has completed and candidates are agreed, (2) User wants a written trend report, (3) User mentions "trend report", "TIPS report", "write up trends", (4) Preparing a deliverable from scouted trends.
+  Generate a narrative TIPS trend report with inline citations and verifiable claims from trend-scout output. Reads agreed trend candidates, enriches each with web-sourced quantitative evidence via parallel agents, assembles a full report with executive summary and portfolio analysis, generates a trend-panorama insight summary via cogni-narrative, and invokes cogni-claims:claim-work for automated verification. Use when: (1) trend-scout has completed and candidates are agreed, (2) User wants a written trend report, (3) User mentions "trend report", "TIPS report", "write up trends", (4) Preparing a deliverable from scouted trends.
 ---
 
 # Trend Report
@@ -15,9 +15,9 @@ This skill enables users to:
 1. Transform agreed trend-scout candidates into a narrative report
 2. Enrich each trend with quantitative evidence from web research
 3. Generate inline citations for every quantitative claim
-4. Produce a claims registry compatible with `cogni-workplace:claim-work`
+4. Produce a claims registry compatible with `cogni-claims:claim-work`
 5. Generate a trend-panorama narrative insight summary via cogni-narrative
-6. Optionally verify claims automatically via claim-work
+6. Verify claims automatically via cogni-claims:claim-work
 
 ## Bilingual Support
 
@@ -34,7 +34,7 @@ Full German and English support throughout:
 - `trend-scout` skill completed with `execution.workflow_state == "agreed"` and 52 candidates
 - Web access enabled for evidence enrichment
 - Optional: `cogni-narrative` plugin for insight summary generation (graceful fallback if absent)
-- Optional: `cogni-workplace` plugin for claim verification
+- `cogni-claims` plugin (for claim verification of trend report citations)
 
 ## Shell Execution Constraints
 
@@ -441,7 +441,7 @@ All failures in Phase 2.5 are **non-blocking**. The insight summary is an enhanc
 
 ### Phase 3: Claim Verification (Optional)
 
-**Objective:** Optionally verify quantitative claims via `cogni-workplace:claim-work`.
+**Objective:** Optionally verify quantitative claims via `cogni-claims:claim-work`.
 
 #### Step 3.1: Ask User
 
@@ -462,11 +462,11 @@ AskUserQuestion:
 
 ```yaml
 Skill:
-  skill: "cogni-workplace:claim-work"
+  skill: "cogni-claims:claim-work"
   args: "--file-path {PROJECT_PATH}/tips-trend-report.md --claims-file {PROJECT_PATH}/tips-trend-report-claims.json --verdict-mode --language {LANGUAGE}"
 ```
 
-**If `cogni-workplace` is not installed:** Display WARNING and skip verification. Do NOT halt.
+**If `cogni-claims` is not installed:** Display WARNING and skip verification. Do NOT halt.
 
 #### Step 3.3: Process Verification Results
 
@@ -532,7 +532,7 @@ Verification: {verdict or "skipped"}
 Recommended next steps:
   1. export-html-report — Generate interactive HTML report
   2. export-pdf-report — Generate formal PDF report
-  3. cogni-workplace:claim-work — Verify claims (if skipped)
+  3. cogni-claims:claim-work — Verify claims (if skipped)
 ```
 
 ---
@@ -548,7 +548,7 @@ Recommended next steps:
 | Agent returns `ok: false` | Retry once, then HALT with dimension name |
 | All agents fail | HALT: "All dimension agents failed. Check web access." |
 | `cogni-narrative` not installed | WARNING: Skip insight summary, proceed to Phase 3 |
-| `cogni-workplace` not installed | WARNING: Skip verification, proceed to finalization |
+| `cogni-claims` not installed | WARNING: Skip verification, proceed to finalization |
 | claim-work returns FAIL | Present failed claims to user. Do NOT auto-correct. |
 
 ## Integration
@@ -561,7 +561,7 @@ Recommended next steps:
 
 - **export-html-report** — Can render `tips-trend-report.md` as interactive HTML
 - **export-pdf-report** — Can render `tips-trend-report.md` as formal PDF
-- **cogni-workplace:claim-work** — Can verify claims from `tips-trend-report-claims.json`
+- **cogni-claims:claim-work** — Can verify claims from `tips-trend-report-claims.json`
 
 ## Debugging
 
