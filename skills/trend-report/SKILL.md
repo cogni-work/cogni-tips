@@ -20,7 +20,7 @@ Transform agreed trend-scout candidates into a polished, evidence-backed report:
 
 ## Bilingual Support
 
-Full German and English support — language auto-detected from `trend-scout-output.json` config. Report prose, section headers, and TIPS labels all adapt. Web searches run bilingually for maximum coverage. German text uses proper umlauts (never ASCII transliterations).
+Full German and English support. **Always ask the user** for the deliverable language (DE or EN) at the start of Phase 0 — do not silently inherit from `trend-scout-output.json`. The trend-scout language is offered as default, but the user must confirm or override. Report prose, section headers, and TIPS labels all adapt to the chosen language. Web searches run bilingually for maximum coverage. German text uses proper umlauts (never ASCII transliterations).
 
 ## Prerequisites
 
@@ -130,13 +130,28 @@ Group the 52 candidates by dimension (4 groups of ~13):
 
 For each dimension, prepare: candidate list, matching raw web signals (filtered by dimension, or "none"), and shared config (industry en/de, subsector en/de, topic, language).
 
-#### Step 0.5: Load i18n Labels
+#### Step 0.5: Ask User for Deliverable Language
 
-Read the labels file matching the detected language:
+The `project_language` from trend-scout-output.json is the **default**, but always confirm with the user:
+
+```yaml
+AskUserQuestion:
+  question: "Report language? trend-scout used '{project_language}'. Keep or change?"
+  header: "Language"
+  options:
+    - label: "Deutsch (DE)"
+    - label: "English (EN)"
+```
+
+Set `LANGUAGE` to the user's choice. Update `project_language` in trend-scout-output.json if changed.
+
+#### Step 0.6: Load i18n Labels
+
+Read the labels file matching the chosen language:
 - English: [references/i18n/labels-en.md](references/i18n/labels-en.md)
 - German: [references/i18n/labels-de.md](references/i18n/labels-de.md)
 
-#### Step 0.6: Clean Up Stale Output Files
+#### Step 0.7: Clean Up Stale Output Files
 
 On re-runs, remove stale files to prevent mixing old and new content:
 

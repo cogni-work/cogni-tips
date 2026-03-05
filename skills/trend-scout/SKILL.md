@@ -116,7 +116,7 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → [USER EDITS] → Phase 4 → Pha
 
 Read [references/workflow-phases/phase-0-initialize.md](references/workflow-phases/phase-0-initialize.md), then execute:
 
-1. Detect user language from input (DE/EN)
+1. **Ask user for deliverable language** via AskUserQuestion: "Deutsch (DE) oder English (EN)?" — do NOT auto-detect, always ask explicitly
 2. Load [references/industry-taxonomy.md](references/industry-taxonomy.md)
 3. Present industries with subsectors (bilingual)
 4. Capture user selection via AskUserQuestion
@@ -128,7 +128,7 @@ Read [references/workflow-phases/phase-0-initialize.md](references/workflow-phas
 **Required outputs:**
 
 - PROJECT_PATH, PROJECT_SLUG variables set
-- PROJECT_LANGUAGE detected (de/en)
+- PROJECT_LANGUAGE set from explicit user choice (de/en)
 - INDUSTRY, SUBSECTOR selected
 - RESEARCH_TOPIC captured
 - Project structure initialized in current working directory under `cogni-tips/`

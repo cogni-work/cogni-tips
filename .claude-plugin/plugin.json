@@ -1,6 +1,6 @@
 {
   "name": "cogni-tips",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Strategic trend scouting and reporting pipeline specialized for the German Mittelstand and DACH markets. Combines the Smarter Service Trendradar (4-dimension structure) with the TIPS content framework (Trends, Implications, Possibilities, Solutions). Bilingual research (EN/DE) with curated DACH institutional sources (VDMA, BITKOM, Fraunhofer, Zukunftsinstitut, EUR-Lex).",
   "author": {
     "name": "Stephan de Haas",
