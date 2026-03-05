@@ -64,7 +64,7 @@ claude plugins add cogni-work/cogni-tips
 
 **Prerequisites:**
 - Web access enabled (for trend research)
-- `cogni-claims` plugin (for claim verification of trend report citations)
+- Optional: `cogni-claims` plugin (recommended for claim verification of trend report citations)
 - Optional: `cogni-narrative` plugin (for insight summary generation)
 
 ## Quick start
@@ -108,4 +108,4 @@ trend-report   → narrative report from agreed candidates
 
 ## License
 
-[CC-BY-NC-SA-4.0](LICENSE)
+[AGPL-3.0-only](LICENSE)
