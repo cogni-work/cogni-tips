@@ -34,9 +34,9 @@ Full German and English support — language auto-detected from `trend-scout-out
 | Variable | Purpose | Example |
 |----------|---------|---------|
 | `CLAUDE_PLUGIN_ROOT` | Plugin installation (skills, references) | `~/.claude/plugins/marketplaces/cogni-tips` |
-| `COGNI_WORKSPACE_ROOT` | Workspace (project data, outputs) | `~/cogni-workspace/cogni-tips` |
+| `COGNI_WORKSPACE_ROOT` | Optional workspace root override (default: `$PWD`) | Current working directory |
 
-Environment variables `COGNI_WORKSPACE_ROOT` and `CLAUDE_PLUGIN_ROOT` are injected automatically from `settings.local.json` — do not source `.workplace-env.sh`.
+`CLAUDE_PLUGIN_ROOT` is injected automatically from `settings.local.json`. `COGNI_WORKSPACE_ROOT` is optional — defaults to the current working directory if not set.
 
 ## Shell Usage
 

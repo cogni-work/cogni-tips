@@ -208,8 +208,8 @@ Examples:
 ## Step 0.6: Check for Existing Project
 
 ```bash
-# Get projects root from workplace-manager (trend-wave workspace)
-PROJECTS_ROOT="${COGNI_WORKSPACE_ROOT:-${HOME}/trend-projects}"
+# Get projects root (defaults to current working directory)
+PROJECTS_ROOT="${COGNI_WORKSPACE_ROOT:-$(pwd)}"
 PROJECT_PATH="${PROJECTS_ROOT}/cogni-tips/${PROJECT_SLUG}"
 
 if [[ -d "$PROJECT_PATH" ]]; then
@@ -366,7 +366,7 @@ SKIP_TO_PHASE=1  # Proceed to web research
 - [ ] Industry and subsector selected and validated
 - [ ] RESEARCH_TOPIC captured
 - [ ] PROJECT_SLUG generated
-- [ ] Project structure initialized in COGNI_WORKSPACE_ROOT
+- [ ] Project structure initialized in current working directory (or `COGNI_WORKSPACE_ROOT` if set)
 - [ ] trend-scout-output.json updated with industry metadata
 - [ ] Logging initialized
 - [ ] WEB_RESEARCH_ENABLED set

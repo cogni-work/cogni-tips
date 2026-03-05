@@ -29,7 +29,7 @@ Full German and English support throughout:
 
 ## Prerequisites
 
-- Workplace-manager plugin installed (provides `COGNI_WORKSPACE_ROOT`)
+- Projects are stored relative to the current working directory (or `COGNI_WORKSPACE_ROOT` if set)
 - Web access enabled for live trend research
 
 ## Shell Execution Constraints
@@ -46,13 +46,13 @@ Full German and English support throughout:
 | Variable | Purpose | Example |
 |----------|---------|---------|
 | `CLAUDE_PLUGIN_ROOT` | Plugin installation (scripts, skills) | `~/.claude/plugins/marketplaces/cogni-tips` |
-| `COGNI_WORKSPACE_ROOT` | Workspace (project data, outputs) | `~/cogni-workspace/cogni-tips` |
+| `COGNI_WORKSPACE_ROOT` | Optional workspace root override (default: `$PWD`) | Current working directory |
 
 **IMPORTANT - Environment Variables:**
 
-- `COGNI_WORKSPACE_ROOT` and `CLAUDE_PLUGIN_ROOT` are automatically injected by Claude Code from `settings.local.json`
+- `CLAUDE_PLUGIN_ROOT` is automatically injected by Claude Code from `settings.local.json`
+- `COGNI_WORKSPACE_ROOT` is optional — defaults to the current working directory if not set
 - DO NOT source `.workplace-env.sh` - variables are already available at runtime
-- The `.workplace-env.sh` file is for non-Claude contexts only (VS Code, Obsidian, shell scripts)
 
 **Script Locations (always use CLAUDE_PLUGIN_ROOT):**
 
@@ -122,7 +122,7 @@ Read [references/workflow-phases/phase-0-initialize.md](references/workflow-phas
 4. Capture user selection via AskUserQuestion
 5. Capture research topic/focus
 6. Generate project slug: `{subsector}-{topic}-{hash}`
-7. Initialize project via `initialize-trend-project.sh` in `COGNI_WORKSPACE_ROOT/cogni-tips/`
+7. Initialize project via `initialize-trend-project.sh` in the current working directory under `cogni-tips/`
 8. Update `.metadata/trend-scout-output.json` with industry context
 
 **Required outputs:**
@@ -131,7 +131,7 @@ Read [references/workflow-phases/phase-0-initialize.md](references/workflow-phas
 - PROJECT_LANGUAGE detected (de/en)
 - INDUSTRY, SUBSECTOR selected
 - RESEARCH_TOPIC captured
-- Project structure initialized in COGNI_WORKSPACE_ROOT/cogni-tips/
+- Project structure initialized in current working directory under `cogni-tips/`
 
 ### Phase 1: Bilingual Web Research + API Queries (DELEGATED)
 
@@ -401,7 +401,7 @@ Location: `{PROJECT_PATH}/.metadata/trend-scout-output.json`
   "version": "1.0.0",
   "project_id": "automotive-ai-predictive-maintenance-abc12345",
   "project_name": "automotive-ai-predictive-maintenance-abc12345",
-  "project_path": "/path/to/COGNI_WORKSPACE_ROOT/project",
+  "project_path": "/path/to/project",
   "project_language": "de",
   "created": "2025-12-16T10:30:00Z",
 
@@ -601,4 +601,4 @@ grep "\[VALIDATION\]" "${PROJECT_PATH}/.logs/trend-scout-execution-log.txt"
 1. **"Industry not selected"** - User must select from taxonomy
 2. **"Selection count invalid"** - Wrong number of candidates marked per cell
 3. **"File not found"** - Ensure trend-candidates.md exists before Phase 4
-4. **"Project init failed"** - Check COGNI_WORKSPACE_ROOT is configured via workplace-manager
+4. **"Project init failed"** - Check current working directory is writable (or `COGNI_WORKSPACE_ROOT` if set)

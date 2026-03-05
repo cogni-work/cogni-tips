@@ -12,13 +12,12 @@ set -euo pipefail
 #   --project-name <name>      Project name (required, kebab-case)
 #   --industry <industry>      Industry name for metadata (optional)
 #   --skill-dir <dir>          Skill-specific subdirectory (e.g., "cogni-tips")
-#   --projects-root <path>     Projects root directory (default: ${COGNI_WORKSPACE_ROOT} or ~/trend-projects)
+#   --projects-root <path>     Projects root directory (default: current working directory)
 #   --language <code>          Project language (ISO 639-1 code, default: "en")
 #   --json                     Output results in JSON format
 #
 # Environment Variables:
-#   COGNI_WORKSPACE_ROOT          Workspace root (set by workplace-manager)
-#                              Defaults to HOME if not set
+#   COGNI_WORKSPACE_ROOT    Optional workspace root override (default: current directory)
 #
 # Returns:
 #   JSON: {"success": true|false, "project_path": "...", "directories": [...], "error": "..."}
@@ -44,7 +43,7 @@ readonly SCRIPT_VERSION="1.0.0"
 readonly SCRIPT_NAME="$(basename "$0")"
 
 # Default configuration
-readonly DEFAULT_PROJECTS_ROOT="${COGNI_WORKSPACE_ROOT:-${HOME}/trend-projects}"
+readonly DEFAULT_PROJECTS_ROOT="${COGNI_WORKSPACE_ROOT:-$(pwd)}"
 
 # Parse arguments
 PROJECT_NAME=""
