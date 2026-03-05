@@ -173,7 +173,7 @@ Create a semantic project slug combining industry and topic:
 
 ```bash
 # Use generate-project-slug.sh script
-# CRITICAL: Use CLAUDE_PLUGIN_ROOT for scripts, NOT COGNI_RESEARCH_ROOT
+# CRITICAL: Use CLAUDE_PLUGIN_ROOT for scripts, NOT COGNI_WORKSPACE_ROOT
 SCRIPT_PATH="${CLAUDE_PLUGIN_ROOT}/skills/trend-scout/scripts/generate-project-slug.sh"
 
 # Validate script exists - do NOT improvise if missing
@@ -209,7 +209,7 @@ Examples:
 
 ```bash
 # Get projects root from workplace-manager (trend-wave workspace)
-PROJECTS_ROOT="${COGNI_RESEARCH_ROOT:-${HOME}/trend-projects}"
+PROJECTS_ROOT="${COGNI_WORKSPACE_ROOT:-${HOME}/trend-projects}"
 PROJECT_PATH="${PROJECTS_ROOT}/cogni-tips/${PROJECT_SLUG}"
 
 if [[ -d "$PROJECT_PATH" ]]; then
@@ -243,7 +243,7 @@ Use trend-scout initialization script (simplified structure):
 
 ```bash
 # Initialize trend-scout project
-# CRITICAL: Use CLAUDE_PLUGIN_ROOT for scripts, NOT COGNI_RESEARCH_ROOT
+# CRITICAL: Use CLAUDE_PLUGIN_ROOT for scripts, NOT COGNI_WORKSPACE_ROOT
 INIT_SCRIPT="${CLAUDE_PLUGIN_ROOT}/scripts/initialize-trend-project.sh"
 
 # Validate script exists - do NOT improvise if missing
@@ -282,7 +282,7 @@ Update consolidated trend-scout-output.json with industry metadata:
 
 ```bash
 # Use update-industry-metadata.sh script
-# CRITICAL: Use CLAUDE_PLUGIN_ROOT for scripts, NOT COGNI_RESEARCH_ROOT
+# CRITICAL: Use CLAUDE_PLUGIN_ROOT for scripts, NOT COGNI_WORKSPACE_ROOT
 METADATA_SCRIPT="${CLAUDE_PLUGIN_ROOT}/skills/trend-scout/scripts/update-industry-metadata.sh"
 
 # Validate script exists - do NOT improvise if missing
@@ -366,7 +366,7 @@ SKIP_TO_PHASE=1  # Proceed to web research
 - [ ] Industry and subsector selected and validated
 - [ ] RESEARCH_TOPIC captured
 - [ ] PROJECT_SLUG generated
-- [ ] Project structure initialized in COGNI_RESEARCH_ROOT
+- [ ] Project structure initialized in COGNI_WORKSPACE_ROOT
 - [ ] trend-scout-output.json updated with industry metadata
 - [ ] Logging initialized
 - [ ] WEB_RESEARCH_ENABLED set

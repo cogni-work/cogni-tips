@@ -56,7 +56,7 @@ else
 fi
 
 # Use finalize-candidates.sh script
-# CRITICAL: Use CLAUDE_PLUGIN_ROOT for scripts, NOT COGNI_RESEARCH_ROOT
+# CRITICAL: Use CLAUDE_PLUGIN_ROOT for scripts, NOT COGNI_WORKSPACE_ROOT
 FINALIZE_SCRIPT="${CLAUDE_PLUGIN_ROOT}/skills/trend-scout/scripts/finalize-candidates.sh"
 
 # Validate script exists - do NOT improvise if missing
