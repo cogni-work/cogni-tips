@@ -1,6 +1,8 @@
 # cogni-tips
 
-A Claude Code plugin for scouting, selecting, and reporting on strategic industry trends. Combines the [Smarter Service Trendradar](https://www.smarter-service.com/2023/01/31/trendradar-fuer-die-multikrise-und-neue-geooekonomie/) (4-dimension structure by Bernhard Steimel) with the TIPS content framework (Trends, Implications, Possibilities, Solutions — originally from [Siemens Industry Software](https://patents.google.com/patent/WO2018046399A1/en), patent ceased 2019).
+A Claude Code plugin for scouting, selecting, and reporting on strategic industry trends — **specialized for the German Mittelstand and DACH markets**. Combines the [Smarter Service Trendradar](https://www.smarter-service.com/2023/01/31/trendradar-fuer-die-multikrise-und-neue-geooekonomie/) (4-dimension structure by Bernhard Steimel) with the TIPS content framework (Trends, Implications, Possibilities, Solutions — originally from [Siemens Industry Software](https://patents.google.com/patent/WO2018046399A1/en), patent ceased 2019).
+
+> **Market scope:** This plugin is purpose-built for DACH (Germany, Austria, Switzerland). It searches bilingually in English and German, targets curated German institutional sources (VDMA, BITKOM, Fraunhofer, Zukunftsinstitut, EUR-Lex), and uses German-language dimension names from the Smarter Service Trendradar. The underlying bilingual search architecture is generalizable to other markets — see [`references/architecture-pattern.md`](references/architecture-pattern.md) for the reusable pattern.
 
 ## Frameworks
 
@@ -41,7 +43,7 @@ This plugin automates the research-heavy parts while keeping strategic judgment 
 
 ## What it does
 
-A three-stage pipeline: scout trends across an industry using the Trendradar dimensions, select the most relevant candidates, and generate a TIPS-structured narrative report with web-sourced quantitative evidence and inline citations. Full bilingual support (EN/DE) for DACH market coverage.
+A three-stage pipeline for DACH-focused trend intelligence: scout trends across an industry using the Trendradar dimensions, select the most relevant candidates, and generate a TIPS-structured narrative report with web-sourced quantitative evidence and inline citations. Bilingual research (EN/DE) with curated German institutional sources.
 
 1. **Scout** trends across 4 Trendradar dimensions with bilingual web research (32 searches + academic, patent, and regulatory API queries)
 2. **Select** from scored candidates using multi-framework analysis (Ansoff signal intensity, Rogers diffusion stages, CRAAP source quality)
@@ -54,7 +56,7 @@ If you need to stay ahead of industry trends for strategy, advisory, or portfoli
 - **Broad coverage, fast.** 32+ bilingual web searches plus academic and patent sources, executed in minutes.
 - **Framework-scored, not gut-feel.** Every candidate scored on impact, probability, strategic fit, source quality, and signal strength.
 - **Evidence-backed output.** Every quantitative claim in the report has an inline citation you can verify.
-- **Bilingual by default.** German and English research queries, DACH-specific source targeting, output in your chosen language.
+- **DACH-native.** German and English research queries, curated DACH institutional sources (industry associations, Fraunhofer, EUR-Lex), output in your chosen language.
 
 ## Installation
 
