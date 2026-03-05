@@ -34,7 +34,7 @@ Full German and English support — language auto-detected from `trend-scout-out
 | Variable | Purpose | Example |
 |----------|---------|---------|
 | `CLAUDE_PLUGIN_ROOT` | Plugin installation (skills, references) | `~/.claude/plugins/marketplaces/cogni-tips` |
-| `COGNI_RESEARCH_ROOT` | Workspace (project data, outputs) | `~/cogni-research/trends` |
+| `COGNI_RESEARCH_ROOT` | Workspace (project data, outputs) | `~/cogni-research/cogni-tips` |
 
 Environment variables `COGNI_RESEARCH_ROOT` and `CLAUDE_PLUGIN_ROOT` are injected automatically from `settings.local.json` — do not source `.workplace-env.sh`.
 

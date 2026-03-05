@@ -46,7 +46,7 @@ Full German and English support throughout:
 | Variable | Purpose | Example |
 |----------|---------|---------|
 | `CLAUDE_PLUGIN_ROOT` | Plugin installation (scripts, skills) | `~/.claude/plugins/marketplaces/cogni-tips` |
-| `COGNI_RESEARCH_ROOT` | Workspace (project data, outputs) | `~/cogni-research/trends` |
+| `COGNI_RESEARCH_ROOT` | Workspace (project data, outputs) | `~/cogni-research/cogni-tips` |
 
 **IMPORTANT - Environment Variables:**
 
@@ -122,7 +122,7 @@ Read [references/workflow-phases/phase-0-initialize.md](references/workflow-phas
 4. Capture user selection via AskUserQuestion
 5. Capture research topic/focus
 6. Generate project slug: `{subsector}-{topic}-{hash}`
-7. Initialize project via `initialize-trend-project.sh` in `COGNI_RESEARCH_ROOT/trends/`
+7. Initialize project via `initialize-trend-project.sh` in `COGNI_RESEARCH_ROOT/cogni-tips/`
 8. Update `.metadata/trend-scout-output.json` with industry context
 
 **Required outputs:**
@@ -131,7 +131,7 @@ Read [references/workflow-phases/phase-0-initialize.md](references/workflow-phas
 - PROJECT_LANGUAGE detected (de/en)
 - INDUSTRY, SUBSECTOR selected
 - RESEARCH_TOPIC captured
-- Project structure initialized in COGNI_RESEARCH_ROOT/trends/
+- Project structure initialized in COGNI_RESEARCH_ROOT/cogni-tips/
 
 ### Phase 1: Bilingual Web Research + API Queries (DELEGATED)
 

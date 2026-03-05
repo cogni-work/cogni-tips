@@ -210,7 +210,7 @@ Examples:
 ```bash
 # Get projects root from workplace-manager (trend-wave workspace)
 PROJECTS_ROOT="${COGNI_RESEARCH_ROOT:-${HOME}/trend-projects}"
-PROJECT_PATH="${PROJECTS_ROOT}/trends/${PROJECT_SLUG}"
+PROJECT_PATH="${PROJECTS_ROOT}/cogni-tips/${PROJECT_SLUG}"
 
 if [[ -d "$PROJECT_PATH" ]]; then
   # Check if it's a trend-scout project
@@ -256,7 +256,7 @@ fi
 
 INIT_OUTPUT=$(bash "$INIT_SCRIPT" \
   --project-name "$PROJECT_SLUG" \
-  --skill-dir "trends" \
+  --skill-dir "cogni-tips" \
   --industry "$SUBSECTOR_SLUG" \
   --language "$PROJECT_LANGUAGE" \
   --json)

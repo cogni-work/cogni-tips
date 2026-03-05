@@ -11,7 +11,7 @@ set -euo pipefail
 # Arguments:
 #   --project-name <name>      Project name (required, kebab-case)
 #   --industry <industry>      Industry name for metadata (optional)
-#   --skill-dir <dir>          Skill-specific subdirectory (e.g., "trends", "portfolio")
+#   --skill-dir <dir>          Skill-specific subdirectory (e.g., "cogni-tips")
 #   --projects-root <path>     Projects root directory (default: ${COGNI_RESEARCH_ROOT} or ~/trend-projects)
 #   --language <code>          Project language (ISO 639-1 code, default: "en")
 #   --json                     Output results in JSON format
