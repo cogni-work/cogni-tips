@@ -116,7 +116,7 @@ Phase 0 → Phase 1 → Phase 2 → Phase 3 → [USER EDITS] → Phase 4 → Pha
 
 Read [references/workflow-phases/phase-0-initialize.md](references/workflow-phases/phase-0-initialize.md), then execute:
 
-1. **Ask user for deliverable language** via AskUserQuestion: "Deutsch (DE) oder English (EN)?" — do NOT auto-detect, always ask explicitly
+1. **Ask user for deliverable language:** Read workspace language from `.workspace-config.json` (via `${PROJECT_AGENTS_OPS_ROOT}/.workspace-config.json` or CWD). Ask user via AskUserQuestion: "Deutsch (DE) oder English (EN)?" If workspace language is set, present it as default (e.g., "[Default: DE based on workspace]"). Do NOT skip asking — always confirm with user.
 2. Load [references/industry-taxonomy.md](references/industry-taxonomy.md)
 3. Present industries with subsectors (bilingual)
 4. Capture user selection via AskUserQuestion

@@ -32,12 +32,13 @@ Analyzing user input for language indicators:
 - German indicators: [umlauts (ä,ö,ü,ß), German words, etc.]
 - English indicators: [English words, patterns]
 - Explicit language request: [YES/NO]
+- Workspace language (.workspace-config.json): [VALUE or "not found"]
 
 Detection result:
 - Primary language: [de/en]
 - Confidence: [HIGH/MEDIUM/LOW]
 
-Setting PROJECT_LANGUAGE = [de/en]
+PROJECT_LANGUAGE = explicit choice > workspace config > input analysis > en
 </thinking>
 
 ```bash

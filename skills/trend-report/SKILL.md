@@ -20,7 +20,7 @@ Transform agreed trend-scout candidates into a polished, evidence-backed report:
 
 ## Bilingual Support
 
-Full German and English support. **Always ask the user** for the deliverable language (DE or EN) at the start of Phase 0 — do not silently inherit from `trend-scout-output.json`. The trend-scout language is offered as default, but the user must confirm or override. Report prose, section headers, and TIPS labels all adapt to the chosen language. Web searches run bilingually for maximum coverage. German text uses proper umlauts (never ASCII transliterations).
+Full German and English support. **Always ask the user** for the deliverable language (DE or EN) at the start of Phase 0 — do not silently inherit from `trend-scout-output.json`. Default priority for pre-filling: (1) trend-scout `project_language` from output JSON, (2) workspace language from `.workspace-config.json` (via `${PROJECT_AGENTS_OPS_ROOT}/.workspace-config.json` or CWD), (3) `en`. User must always confirm or override. Report prose, section headers, and TIPS labels all adapt to the chosen language. Web searches run bilingually for maximum coverage. German text uses proper umlauts (never ASCII transliterations).
 
 ## Prerequisites
 
