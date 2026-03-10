@@ -108,6 +108,26 @@ trend-report   → narrative report from agreed candidates
 - **TIPS framework** originated at [Siemens Industry Software](https://patents.google.com/patent/WO2018046399A1/en) — Trends, Implications, Possibilities, Solutions content structure. Patent WO2018046399A1 (filed 2017, ceased 2019).
 - **Scoring frameworks** — Ansoff Matrix (signal intensity), Rogers Diffusion of Innovations (adoption stage), CRAAP Test (source quality).
 
+## Architecture
+
+```
+cogni-tips/
+├── .claude-plugin/plugin.json    Plugin manifest
+├── skills/                       3 trend intelligence skills
+│   ├── trend-scout/
+│   ├── tips-selection/
+│   └── trend-report/
+├── agents/                       3 research agents
+│   ├── trend-web-researcher.md
+│   ├── trend-generator.md
+│   └── trend-report-writer.md
+├── references/                   Framework documentation
+│   ├── architecture-pattern.md
+│   └── research-types/
+└── scripts/                      Utility scripts
+    └── initialize-trend-project.sh
+```
+
 ## License
 
-[AGPL-3.0-only](LICENSE)
+[AGPL-3.0](LICENSE)
