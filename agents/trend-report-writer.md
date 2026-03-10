@@ -1,6 +1,6 @@
 ---
 name: trend-report-writer
-description: Generate a narrative TIPS dimension section with inline citations and extract verifiable claims. Receives ~13 trend candidates for a single dimension, enriches each with web-sourced quantitative evidence via bilingual searches, writes a markdown section file and a claims JSON file. Returns compact JSON summary. Use when trend-report Phase 1 needs context-efficient dimension section delegation.
+description: Generate a narrative TIPS dimension section with inline citations and verifiable claims from trend candidates. DO NOT USE DIRECTLY — invoked by trend-report Phase 1.
 tools: WebSearch, Read, Write
 model: sonnet
 color: green

@@ -1,6 +1,6 @@
 ---
 name: trend-generator
-description: Generate 60 scored trend candidates using multi-framework analysis (TIPS dimensions, Ansoff intensity, Rogers diffusion, CRAAP source quality). Combines web research signals with training knowledge for industry-contextualized trend discovery. Extended thinking MANDATORY for complex cognitive synthesis. Use when trend-scout Phase 2 needs context-efficient candidate generation delegation.
+description: Generate 60 scored trend candidates using multi-framework analysis (TIPS, Ansoff, Rogers, CRAAP). DO NOT USE DIRECTLY — invoked by trend-scout Phase 2.
 tools: Read, Write
 model: opus
 color: magenta

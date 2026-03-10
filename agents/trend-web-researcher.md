@@ -1,6 +1,6 @@
 ---
 name: trend-web-researcher
-description: Execute bilingual web research (EN/DE) with API queries for trend scouting. Returns aggregated signals as compact JSON while logging full results to project. Use when trend-scout Phase 1 needs context-efficient web research delegation.
+description: Execute bilingual web research (EN/DE) for trend scouting and return aggregated signals as compact JSON. DO NOT USE DIRECTLY — invoked by trend-scout Phase 1.
 tools: WebSearch, WebFetch, Write, Read
 model: haiku
 color: cyan
